@@ -63,7 +63,7 @@ public class Node implements Comparable<Node> {
 
 
 
-    public void setvisited(boolean isvisited) {
+    public void setvisited(boolean visited) {
         this.visited = visited;
     }
 

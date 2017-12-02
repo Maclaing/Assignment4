@@ -69,23 +69,67 @@ public class ParisMetro {
 
 
     }
-    public static void main(String args[]){
-        getData();
-    }
-    public static ArrayList<Node> sameLine(int id){
+
+    public static ArrayList<Node> sameLine(int id) {
         ArrayList<Node> lineNodes = new ArrayList<Node>(); // add all stations in same line into lineNodes
+        ArrayList<Node> tmpLineNodes = new ArrayList<Node>(); // for the for loop
 
         Node start = nodesArray[id];
-        boolean finished = false;
+        lineNodes.add(start);
+        start.setvisited(true);
 
-        while(!finished){
+        for (Edge e : start.getOutGoingEdges()) {
+            if (e.getTime() != -1 && e.getFinishNode().isVisited()==false) {
+
+                tmpLineNodes = sameLine(e.getFinishNode(), tmpLineNodes);
+                lineNodes.addAll(tmpLineNodes);
+
+                tmpLineNodes.clear();
+
+
+            }
+
 
         }
+        reset();
+        return lineNodes;
+
+    }
 
 
 
 
+    private static ArrayList<Node> sameLine(Node curNode, ArrayList<Node> nodeArr){ // helper method
+        curNode.setvisited(true);
+        nodeArr.add(curNode);
 
+        for(Edge e : curNode.getOutGoingEdges()){
+            if(e.getTime()!=-1 && e.getFinishNode().isVisited()==false){
+                    sameLine(e.getFinishNode(),nodeArr);
+
+                }
+            }
+
+        return nodeArr;
+
+
+
+
+    }
+
+    private static void reset(){ // reset all nodes
+        for(Node node: nodes){
+            node.setvisited(false);
+        }
+    }
+
+
+    public static void main(String args[]){
+        getData();
+        ArrayList<Node> sameLineNodes = sameLine(111);
+        for(Node node: sameLineNodes){
+            System.out.println(node.getName());
+        }
     }
  }
 

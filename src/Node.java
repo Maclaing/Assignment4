@@ -9,8 +9,8 @@ public class Node implements Comparable<Node> {
     private String name;
     private boolean visited;
     private int timer;
+	private Node predecessor;
 
-    private ArrayList<Node> path = new ArrayList<Node>();
     private ArrayList<Edge> inComingEdges = new ArrayList<Edge>();
     private ArrayList<Edge> outGoingEdges = new ArrayList<Edge>();
 
@@ -45,10 +45,6 @@ public class Node implements Comparable<Node> {
         return timer;
     }
 
-    public ArrayList<Node> getPath() {
-        return new ArrayList<Node>(path);
-
-    }
 
     public ArrayList<Edge> getInComingEdges() {
         return inComingEdges;
@@ -58,7 +54,13 @@ public class Node implements Comparable<Node> {
         return outGoingEdges;
     }
 
-
+	public Node getPre(){
+		return(predecessor);
+	}
+	
+	public void setPre(Node pre){
+		predecessor = pre; 
+	}
 
 
 
@@ -71,9 +73,6 @@ public class Node implements Comparable<Node> {
         this.timer = timer;
     }
 
-    public void setPath(ArrayList<Node> path) {
-        this.path = new ArrayList<Node>(path);
-    }
 
     public void addInComingEdge(Edge inComingEdge) {
         this.inComingEdges.add(inComingEdge);

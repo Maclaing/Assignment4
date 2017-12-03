@@ -2,7 +2,10 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.Scanner;
+import java.util.PriorityQueue;
+
 
 /**
  * Created by mackenzie on 11/30/2017.
@@ -13,6 +16,8 @@ public class ParisMetro {
     private static ArrayList<Edge> edges = new ArrayList<Edge>();
 
     private static Node[] nodesArray;
+	
+	final static int WALK = 90;
 
 
 
@@ -116,6 +121,72 @@ public class ParisMetro {
 
 
     }
+	
+	private static int shortestPath(int ID1,int ID2){
+
+        Node N1 = nodesArray[ID1];
+        Node N2 = nodesArray[ID2];
+
+		ArrayList<Node> insideCloud = new ArrayList<Node>();
+		PriorityQueue<Node> outsideCloud = new PriorityQueue();
+		N1.setTimer(0);
+		outsideCloud.add(N1);
+		
+		
+		Node nextNode;
+		while(outsideCloud.size() > 0) {
+            nextNode = outsideCloud.poll();
+            if (insideCloud.size() - 1 == -1){
+                nextNode.setPre(null);
+                insideCloud.add(nextNode);
+            }else{
+                nextNode.setPre(insideCloud.get(insideCloud.size() - 1));
+                insideCloud.add(nextNode);
+            }
+			
+			update(nextNode,insideCloud,outsideCloud);
+			
+		}
+
+        ArrayList<Node> printArray = new ArrayList<Node>();
+        int distanceTime = 0;
+        Node pointer = N2;
+
+		while(pointer.getPre() != null){
+		    printArray.add(pointer);
+		    pointer = pointer.getPre();
+        }
+
+        for(int i = printArray.size()-1; i >=0; i-- ){
+		    System.out.println(printArray.get(i).getName());
+        }
+
+		return(N2.getTimer());
+	}
+	
+	private static void update(Node n, ArrayList<Node> insideCloud, PriorityQueue<Node> outsideCloud){
+		//Based on http://www.vogella.com/tutorials/JavaAlgorithmsDijkstra/article.html
+		
+		
+		for(Edge e: n.getOutGoingEdges()){
+			Node adjacentNode = e.getFinishNode();
+			
+			
+			
+			if(!insideCloud.contains(adjacentNode)){
+				int distance = e.getTime();
+				if(distance == -1){
+					distance = WALK;
+				}
+				int newDistance = n.getTimer() + distance;
+				
+				if(adjacentNode.getTimer() > newDistance){
+					adjacentNode.setTimer(newDistance); 
+					outsideCloud.add(adjacentNode);
+				}
+			}
+		}
+	}
 
     private static void reset(){ // reset all nodes
         for(Node node: nodes){
@@ -126,10 +197,9 @@ public class ParisMetro {
 
     public static void main(String args[]){
         getData();
-        ArrayList<Node> sameLineNodes = sameLine(111);
-        for(Node node: sameLineNodes){
-            System.out.println(node.getName());
-        }
+
+
+        System.out.println(shortestPath(132, 327));
     }
  }
 

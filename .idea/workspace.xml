@@ -2,10 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c0d9ac63-f77b-4e6a-979d-7d15756ad8fa" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Assignment4/Node.class" afterPath="$PROJECT_DIR$/out/production/Assignment4/Node.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Assignment4/ParisMetro.class" afterPath="$PROJECT_DIR$/out/production/Assignment4/ParisMetro.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Node.java" afterPath="$PROJECT_DIR$/src/Node.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ParisMetro.java" afterPath="$PROJECT_DIR$/src/ParisMetro.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -32,16 +28,16 @@
       <file leaf-file-name="ParisMetro.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/ParisMetro.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="422">
-              <caret line="289" column="16" lean-forward="true" selection-start-line="289" selection-start-column="16" selection-end-line="289" selection-end-column="16" />
+            <state relative-caret-position="296">
+              <caret line="235" column="12" lean-forward="false" selection-start-line="235" selection-start-column="12" selection-end-line="235" selection-end-column="12" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#333#339#0" expanded="true" />
                 <element signature="e#399#405#0" expanded="true" />
                 <element signature="e#2539#2545#0" expanded="true" />
                 <element signature="e#2649#2655#0" expanded="true" />
-                <element signature="e#7805#7811#0" expanded="true" />
-                <element signature="e#7867#7873#0" expanded="true" />
+                <element signature="e#7689#7695#0" expanded="true" />
+                <element signature="e#7751#7757#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -661,7 +657,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="21091000" />
+    <option name="totallyTimeSpent" value="21705000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-9" y="-9" width="1938" height="1098" extended-state="7" />
@@ -796,8 +792,8 @@
             <element signature="e#399#405#0" expanded="true" />
             <element signature="e#2539#2545#0" expanded="true" />
             <element signature="e#2649#2655#0" expanded="true" />
-            <element signature="e#7805#7811#0" expanded="true" />
-            <element signature="e#7867#7873#0" expanded="true" />
+            <element signature="e#7689#7695#0" expanded="true" />
+            <element signature="e#7751#7757#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -877,16 +873,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ParisMetro.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="422">
-          <caret line="289" column="16" lean-forward="true" selection-start-line="289" selection-start-column="16" selection-end-line="289" selection-end-column="16" />
+        <state relative-caret-position="296">
+          <caret line="235" column="12" lean-forward="false" selection-start-line="235" selection-start-column="12" selection-end-line="235" selection-end-column="12" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#333#339#0" expanded="true" />
             <element signature="e#399#405#0" expanded="true" />
             <element signature="e#2539#2545#0" expanded="true" />
             <element signature="e#2649#2655#0" expanded="true" />
-            <element signature="e#7805#7811#0" expanded="true" />
-            <element signature="e#7867#7873#0" expanded="true" />
+            <element signature="e#7689#7695#0" expanded="true" />
+            <element signature="e#7751#7757#0" expanded="true" />
           </folding>
         </state>
       </provider>

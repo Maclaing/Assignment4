@@ -1,6 +1,7 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Scanner;
@@ -309,6 +310,22 @@ public class ParisMetro {
             }
         }
         return "# of stations" + in.size() + "\n" + out;
+    }
+
+    public static ArrayList<Node> shortestPathBrokenLine(int id1,int id2, int id3){
+        ArrayList<Node> line= sameLine(id3);
+        for(Node n: line){
+            n.setUsable(false);
+        }
+
+
+        reset();
+        ArrayList<Node> output = shortestPath(id1, id2);
+        reset();
+        for(Node n:line){
+            n.setUsable(true);
+        }
+        return output;
     }
 
 

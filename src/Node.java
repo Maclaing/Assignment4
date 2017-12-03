@@ -8,7 +8,7 @@ public class Node implements Comparable<Node> {
     private String id;
     private String name;
     private boolean visited;
-    private int timer;
+    private int timer = Integer.MAX_VALUE;
 	private Node predecessor;
 
     private ArrayList<Edge> inComingEdges = new ArrayList<Edge>();

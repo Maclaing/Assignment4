@@ -136,7 +136,7 @@ public class ParisMetro {
 		Node nextNode;
 		while(outsideCloud.size() > 0) {
             nextNode = outsideCloud.poll();
-            if (insideCloud.size() - 1 == -1){
+            if (insideCloud.size() == 0){
                 nextNode.setPre(null);
                 insideCloud.add(nextNode);
             }else{
@@ -167,18 +167,19 @@ public class ParisMetro {
 	private static void update(Node n, ArrayList<Node> insideCloud, PriorityQueue<Node> outsideCloud){
 		//Based on http://www.vogella.com/tutorials/JavaAlgorithmsDijkstra/article.html
 		
-		
+		int newDistance;
+		int distance;
 		for(Edge e: n.getOutGoingEdges()){
 			Node adjacentNode = e.getFinishNode();
 			
 			
 			
 			if(!insideCloud.contains(adjacentNode)){
-				int distance = e.getTime();
+				distance = e.getTime();
 				if(distance == -1){
 					distance = WALK;
 				}
-				int newDistance = n.getTimer() + distance;
+				newDistance = n.getTimer() + distance;
 				
 				if(adjacentNode.getTimer() > newDistance){
 					adjacentNode.setTimer(newDistance); 

@@ -234,61 +234,59 @@ public class ParisMetro {
 		}
 	}
 */
- // based on
+ // based on lab 10 graphAlgorithms
     public static ArrayList <Node> shortestPath(int id1,int id2){
         reset();
-        //   inputData.renewData();
 
-        // System.out.print("Start: "+nodesArray[id1].getName()+"Finish"+nodesArray[id2].getName());
 
-        PriorityQueue<Node> minQueue = new PriorityQueue<Node>();
-        ArrayList <Node> currentPath = new ArrayList<Node>();
-        Node start = nodesArray[id1];
-        int walkingTime=90;
+        PriorityQueue<Node> Queue = new PriorityQueue<Node>();      //outside cloud
+        ArrayList <Node> currentPath = new ArrayList<Node>();       //save the predecessor
+        Node from = nodesArray[id1];                                //first node is id1
+        int walkingTime=90;                                         // constant walk time
 
-        start.setTimer(0);
-        Integer currentTime=start.getTimer();
+        from.setTimer(0);                                           //set start node distance (time) to 0
+        Integer currentTime=from.getTimer();
 
         System.out.print(currentTime);
-        Node current = start;
+        Node current = from;
         int numOfStationsVisited=0;
 
-        minQueue.add(start);
+        Queue.add(from);
 
         while (numOfStationsVisited<nodes.size()){
-            current = minQueue.remove();
+            current = Queue.remove(); //get the nearest node (node with lowest time outside the cloud)
 
-            current.setVisited(true);
-            currentPath = current.getPre();
+            current.setVisited(true); //put the node inside the cloud
+            currentPath = current.getPre(); //save the path
 
-            currentPath.add(current);
-            // Graph.toString(currentPath);
-            currentTime = current.getTimer();
+            currentPath.add(current);       //save the path
+
+            currentTime = current.getTimer(); //get the timer for the current node, update surrounding nodes
 
             for (Edge e:current.getOutGoingEdges()){
-                if (e.getTime()==-1){
+                if (e.getTime()==-1){ //walking edge case
                     if(((walkingTime+currentTime)<e.getFinishNode().getTimer())&&(e.getFinishNode().isUsable()))
                     {
-                        e.getFinishNode().setTimer(walkingTime+currentTime);
+                        e.getFinishNode().setTimer(walkingTime+currentTime); //update times
                         e.getFinishNode().setPre(currentPath);
                     }
                 }
-                else{
+                else{ //line edge case
                     if(((e.getTime()+currentTime)<e.getFinishNode().getTimer())&&(e.getFinishNode().isUsable()))
                     {
-                        e.getFinishNode().setTimer(e.getTime()+currentTime);
+                        e.getFinishNode().setTimer(e.getTime()+currentTime); // update times
                         e.getFinishNode().setPre(currentPath);
                     }
                 }
-                e.getFinishNode().setPre(currentPath);
-                if(!e.getFinishNode().isVisited()){minQueue.add(e.getFinishNode());}
+                e.getFinishNode().setPre(currentPath); //save predecessor
+                if(!e.getFinishNode().isVisited()){Queue.add(e.getFinishNode());} //update outside cloud
             }
 
-            numOfStationsVisited++;
-            if (Integer.parseInt(current.getId())==id2){current.setPre(currentPath);break;}
+            numOfStationsVisited++; //counter
+            if (Integer.parseInt(current.getId())==id2){current.setPre(currentPath);break;}// if node found, end
         }
 
-        reset();
+        reset(); //to be safe
 
         return nodesArray[id2].getPre();
 
@@ -300,16 +298,16 @@ public class ParisMetro {
             node.setVisited(false);
         }
     }
-    public static String toString(ArrayList<Node> in) {
+    public static String toString(ArrayList<Node> input) {
         String out = "";
-        for (Node n : in) {
-            if (n != in.get(in.size()-1)) {
+        for (Node n : input) {
+            if (n != input.get(input.size()-1)) {
                 out += n.getName() + " - ";
             } else {
                 out += n.getName();
             }
         }
-        return "# of stations" + in.size() + "\n" + out;
+        return "# of stations" + input.size() + "\n" + out;
     }
 
     public static ArrayList<Node> shortestPathBrokenLine(int id1,int id2, int id3){

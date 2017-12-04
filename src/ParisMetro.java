@@ -327,12 +327,27 @@ public class ParisMetro {
     }
 
 
-    public static void main(String args[]){
+    public static void main(String args[]) {
         getData();
 
+        if (args.length == 1) {
+            ArrayList<Node> line = sameLine(Integer.parseInt(args[0]));
+            System.out.println(toString(line));
 
-        ArrayList<Node> temp = shortestPath(5, 4);
-        System.out.println(temp.get(temp.size()-1).getTimer()+toString(temp));
-    }
- }
+
+        } else if (args.length == 2) {
+            ArrayList<Node> temp = shortestPath(Integer.parseInt(args[0]), Integer.parseInt(args[1]));
+            System.out.println(temp.get(temp.size() - 1).getTimer() + toString(temp));
+            System.out.println("Timer:" + temp.get(temp.size() - 1).getTimer() +"\n" + "Shortest path "  + ParisMetro.toString(temp));
+        } else if(args.length==3){
+            ArrayList<Node> tmp = shortestPathBrokenLine(Integer.parseInt(args[0]),Integer.parseInt(args[1]),Integer.parseInt(args[2]));
+            System.out.println("Timer "+tmp.get(tmp.size()-1).getTimer() +"\n" +"Shortest path "+ParisMetro.toString(tmp));}
+        }
+}
+
+
+
+
+
+
 

@@ -10,6 +10,7 @@ public class Node implements Comparable<Node> {
     private boolean visited;
     private int timer = Integer.MAX_VALUE;
 	private Node predecessor;
+	private boolean isUsable;
 
     private ArrayList<Edge> inComingEdges = new ArrayList<Edge>();
     private ArrayList<Edge> outGoingEdges = new ArrayList<Edge>();
@@ -18,6 +19,7 @@ public class Node implements Comparable<Node> {
         this.name=name;
         this.id=id;
         this.visited=false;
+        this.isUsable = true;
 
 
     }
@@ -45,6 +47,14 @@ public class Node implements Comparable<Node> {
         return timer;
     }
 
+
+    public boolean isUsable() {
+        return isUsable;
+    }
+
+    public void setUsable(boolean usable) {
+        isUsable = usable;
+    }
 
     public ArrayList<Edge> getInComingEdges() {
         return inComingEdges;

@@ -10,6 +10,9 @@ import java.util.PriorityQueue;
 /**
  * Created by mackenzie on 11/30/2017.
  */
+
+//Adapted from https://stackoverflow.com/questions/17480022/java-find-shortest-path-between-2-points-in-a-distance-weighted-map
+
 public class ParisMetro {
 
     private static ArrayList<Node> nodes = new ArrayList<Node>();
@@ -125,7 +128,10 @@ public class ParisMetro {
 	private static int shortestPath(int ID1,int ID2){
 
         Node N1 = nodesArray[ID1];
+        N1.setPre(null);
         Node N2 = nodesArray[ID2];
+        System.out.println("N1: " + N1.getId());
+        System.out.println("N2: " + N2.getId());
 
 		ArrayList<Node> insideCloud = new ArrayList<Node>();
 		PriorityQueue<Node> outsideCloud = new PriorityQueue();
@@ -136,15 +142,12 @@ public class ParisMetro {
 		Node nextNode;
 		while(outsideCloud.size() > 0) {
             nextNode = outsideCloud.poll();
-            if (insideCloud.size() == 0){
-                nextNode.setPre(null);
-                insideCloud.add(nextNode);
-            }else{
-                nextNode.setPre(insideCloud.get(insideCloud.size() - 1));
-                insideCloud.add(nextNode);
+            insideCloud.add(nextNode);
+            if(insideCloud.get(insideCloud.size()-1).equals(ID2)){
+                break;
+            }else {
+                update(nextNode, insideCloud, outsideCloud);
             }
-			
-			update(nextNode,insideCloud,outsideCloud);
 			
 		}
 
@@ -152,46 +155,68 @@ public class ParisMetro {
         int distanceTime = 0;
         Node pointer = N2;
 
-		while(pointer.getPre() != null){
+		while(pointer != null){
 		    printArray.add(pointer);
 		    pointer = pointer.getPre();
         }
 
+        System.out.println("Printing shortest path:");
         for(int i = printArray.size()-1; i >=0; i-- ){
-		    System.out.println(printArray.get(i).getName());
+		    System.out.print(printArray.get(i).getId() + " ");
         }
+        System.out.println("");
 
+        reset();
 		return(N2.getTimer());
 	}
 	
 	private static void update(Node n, ArrayList<Node> insideCloud, PriorityQueue<Node> outsideCloud){
 		//Based on http://www.vogella.com/tutorials/JavaAlgorithmsDijkstra/article.html
-		
+
 		int newDistance;
 		int distance;
 		for(Edge e: n.getOutGoingEdges()){
 			Node adjacentNode = e.getFinishNode();
-			
-			
-			
-			if(!insideCloud.contains(adjacentNode)){
-				distance = e.getTime();
-				if(distance == -1){
-					distance = WALK;
-				}
-				newDistance = n.getTimer() + distance;
-				
-				if(adjacentNode.getTimer() > newDistance){
-					adjacentNode.setTimer(newDistance); 
-					outsideCloud.add(adjacentNode);
-				}
-			}
+
+			if(adjacentNode.isUsable()) {
+                if (!insideCloud.contains(adjacentNode)) {
+                    distance = e.getTime();
+                    if (distance == -1) {
+                        distance = WALK;
+                    }
+                    newDistance = n.getTimer() + distance;
+
+                    if (adjacentNode.getTimer() > newDistance) {
+                        adjacentNode.setTimer(newDistance);
+                        adjacentNode.setPre(n);
+                        outsideCloud.add(adjacentNode);
+                    }
+                }
+            }
 		}
 	}
+
+    public static int shortestPathBrokenLine(int id1,int id2, int id3){
+	    System.out.println("Line " + id3);
+        ArrayList<Node> line= sameLine(id3);
+        for(Node n: line){
+            n.setUsable(false);
+        }
+
+
+        int time = shortestPath(id1,id2);
+        reset();
+        for(Node n:line){
+            n.setUsable(true);
+        }
+
+        return time;
+    }
 
     private static void reset(){ // reset all nodes
         for(Node node: nodes){
             node.setvisited(false);
+            node.setUsable(true);
         }
     }
 
@@ -199,8 +224,18 @@ public class ParisMetro {
     public static void main(String args[]){
         getData();
 
+        if (args.length == 1) {
+            ArrayList<Node> line = sameLine(Integer.parseInt(args[0]));
+            System.out.println(line.toString());
 
-        System.out.println(shortestPath(132, 327));
+        } else if (args.length == 2) {
+            System.out.println("TOTAL TIME TRAVELED:" + shortestPath(Integer.parseInt(args[0]), Integer.parseInt(args[1])));
+        } else if(args.length==3){
+            System.out.println("TOTAL TIME TRAVELED:"
+                    + shortestPathBrokenLine(Integer.parseInt(args[0]),Integer.parseInt(args[1]),Integer.parseInt(args[2])));
+    }
+
+
     }
  }
 
